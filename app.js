@@ -160,7 +160,7 @@ app.get("/matches/:matchId/players", async (request, response) => {
 
 //API for Returns the statistics of the total score, fours, sixes of a specific player
 app.get("/players/:playerId/playerScores", async (request, response) => {
-  const playerId = request.params;
+  const {playerId} = request.params;
 
   const getStatsOfAPlayer = `
     SELECT 
@@ -177,12 +177,6 @@ app.get("/players/:playerId/playerScores", async (request, response) => {
      `;
 
   const stats = await db.get(getStatsOfAPlayer);
-  console.log(stats);
-  response.send({
-    playerId: stats["playerId"],
-    playerName: stats["playerName"],
-    totalScore: stats["totalScore"],
-    totalFours: stats["totalFours"],
-    totalSixes: stats["totalSixes"],
-  });
+  
+  response.send(stats);
 });
